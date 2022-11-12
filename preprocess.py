@@ -20,7 +20,8 @@ if __name__ == '__main__':
       original_text = filepaths_and_text[i][args.text_index]
       cleaned_text = text._clean_text(original_text, args.text_cleaners)
       filepaths_and_text[i][args.text_index] = cleaned_text
+      filepaths_and_text[i][0]="filelists/wavs/"+filepaths_and_text[i][0]
 
     new_filelist = filelist + "." + args.out_extension
     with open(new_filelist, "w", encoding="utf-8") as f:
-      f.writelines(["|".join(x) + "\n" for x in filepaths_and_text])
+      f.writelines(["|".join(x[:2]) + "\n" for x in filepaths_and_text])
