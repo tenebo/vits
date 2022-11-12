@@ -93,19 +93,24 @@ def normalize(text):
     text = text.strip()
     text = re.sub('\(\d+일\)', '', text)
     text = re.sub('\([⺀-⺙⺛-⻳⼀-⿕々〇〡-〩〸-〺〻㐀-䶵一-鿃豈-鶴侮-頻並-龎]+\)', '', text)
-
+    
     text = normalize_with_dictionary(text, ko_dict["etc_dictionary"])
     text = normalize_english(text)
     text = re.sub('[a-zA-Z]+', normalize_upper, text)
 
+    text = re.sub('[ㄱ-ㅎ]+',normalize_jamo,text)
     text = normalize_quote(text)
     text = normalize_number(text)
-    text = normalize_nonchar(text)
+    # text = normalize_nonchar(text)    
     # text = spacer.space([text])[0]
 
     return text
 
-
+def normalize_jamo(text):
+    text = text.group(0) 
+    if text == 'ㅇ':
+        return '이응'
+        
 def normalize_nonchar(text, inference=False):
     return re.sub(r"\{[^\w\s]?\}", "{sp}", text) if inference else\
             re.sub(r"[^\w\s]?", "", text)
@@ -289,7 +294,7 @@ if __name__ == "__main__":
         "231 cm야.",
         "1 cm야.",
         "21 cm야.",
-        "110 cm야.",
+        "ㅇ받침은 /ng/소리가 납니다.",
         "21마리야.",
         "아, 시력은 알고 있어요. 왼쪽 0.3이고 오른쪽 0.1이요.",
         "왼쪽 0점",
