@@ -101,7 +101,7 @@ def normalize(text):
     text = re.sub('[ㄱ-ㅎ]+',normalize_jamo,text)
     text = normalize_quote(text)
     text = normalize_number(text)
-    # text = normalize_nonchar(text)    
+    text = normalize_nonchar(text)    
     # text = spacer.space([text])[0]
 
     return text
@@ -111,9 +111,10 @@ def normalize_jamo(text):
     if text == 'ㅇ':
         return '이응'
         
-def normalize_nonchar(text, inference=False):
-    return re.sub(r"\{[^\w\s]?\}", "{sp}", text) if inference else\
-            re.sub(r"[^\w\s]?", "", text)
+def normalize_nonchar(text):
+    # return re.sub(r"\{[^\w\s]?\}", "{sp}", text) if inference else\
+    #         re.sub(r"[^\w\s]?", "", text)
+    return re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s\!\'\,\-\.\:\;\?]", "", text)
 
 
 def normalize_with_dictionary(text, dic):
