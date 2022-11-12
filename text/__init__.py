@@ -1,6 +1,6 @@
 """ from https://github.com/keithito/tacotron """
 from text import cleaners
-from text.symbols import symbols
+from text.korean_dict import ALL_SYMBOLS as symbols
 
 
 # Mappings from symbol to numeric ID and vice versa:
@@ -19,6 +19,7 @@ def text_to_sequence(text, cleaner_names):
   sequence = []
 
   clean_text = _clean_text(text, cleaner_names)
+  print(clean_text)
   for symbol in clean_text:
     symbol_id = _symbol_to_id[symbol]
     sequence += [symbol_id]
@@ -52,3 +53,7 @@ def _clean_text(text, cleaner_names):
       raise Exception('Unknown cleaner: %s' % name)
     text = cleaner(text)
   return text
+
+if __name__ == "__main__":
+  a=text_to_sequence('아, 시력은 알고 있어요. 왼쪽 0.3이고 오른쪽 0.1이요.',['korean_cleaners'])
+  print(a)

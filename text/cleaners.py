@@ -14,8 +14,7 @@ hyperparameter. Some cleaners are English-specific. You'll typically want to use
 
 import re
 from unidecode import unidecode
-from phonemizer import phonemize
-
+from .korean import tokenize as korean_tokenize
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r'\s+')
@@ -48,11 +47,6 @@ def expand_abbreviations(text):
     text = re.sub(regex, replacement, text)
   return text
 
-
-def expand_numbers(text):
-  return normalize_numbers(text)
-
-
 def lowercase(text):
   return text.lower()
 
@@ -80,21 +74,6 @@ def transliteration_cleaners(text):
   return text
 
 
-def english_cleaners(text):
-  '''Pipeline for English text, including abbreviation expansion.'''
-  text = convert_to_ascii(text)
-  text = lowercase(text)
-  text = expand_abbreviations(text)
-  phonemes = phonemize(text, language='en-us', backend='espeak', strip=True)
-  phonemes = collapse_whitespace(phonemes)
-  return phonemes
-
-
-def english_cleaners2(text):
-  '''Pipeline for English text, including abbreviation expansion. + punctuation + stress'''
-  text = convert_to_ascii(text)
-  text = lowercase(text)
-  text = expand_abbreviations(text)
-  phonemes = phonemize(text, language='en-us', backend='espeak', strip=True, preserve_punctuation=True, with_stress=True)
-  phonemes = collapse_whitespace(phonemes)
-  return phonemes
+def korean_cleaners(text):
+  text = korean_tokenize(text)
+  return text
