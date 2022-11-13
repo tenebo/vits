@@ -114,8 +114,7 @@ def normalize_jamo(text):
 def normalize_nonchar(text):
     # return re.sub(r"\{[^\w\s]?\}", "{sp}", text) if inference else\
     #         re.sub(r"[^\w\s]?", "", text)
-    return re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s\!\'\,\-\.\:\;\?]", "", text)
-
+    return re.sub(r"[^\uAC00-\uD7A3\s\!\(\)\,\-\.\:\;\?\']", "", text)
 
 def normalize_with_dictionary(text, dic):
     if any(key in text for key in dic.keys()):

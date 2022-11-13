@@ -11,3 +11,7 @@ build
 monotonic_align/monotonic_align
 
 filelists/wavs/
+
+models/
+
+.DS_Store
