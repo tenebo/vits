@@ -54,6 +54,7 @@ def load_warmstart_checkpoint(checkpoint_path, model, optimizer=None):
     state_dict = model.module.state_dict()
   else:
     state_dict = model.state_dict()
+  del saved_state_dict['enc_p.emb.weight']
   new_state_dict= {}
   # print(state_dict.keys())
   for k, v in state_dict.items():
@@ -63,7 +64,6 @@ def load_warmstart_checkpoint(checkpoint_path, model, optimizer=None):
       logger.info("%s is not in the checkpoint" % k)
       new_state_dict[k] = v
 
-  del new_state_dict['enc_p.emb.weight']
   if hasattr(model, 'module'):
     model.module.load_state_dict(new_state_dict)
   else:
