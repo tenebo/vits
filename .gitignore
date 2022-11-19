@@ -15,3 +15,7 @@ filelists/wavs/
 models/
 
 .DS_Store
+
+inference_cpu_test.ipynb
+
+out.wav
