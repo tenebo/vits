@@ -54,20 +54,14 @@ def load_warmstart_checkpoint(checkpoint_path, model, optimizer=None):
     state_dict = model.module.state_dict()
   else:
     state_dict = model.state_dict()
-  del saved_state_dict['enc_p.emb.weight']
-  new_state_dict= {}
-  # print(state_dict.keys())
-  for k, v in state_dict.items():
-    try:
-      new_state_dict[k] = saved_state_dict[k]
-    except:
-      logger.info("%s is not in the checkpoint" % k)
-      new_state_dict[k] = v
+  pretrained_dict = {k: v for k, v in saved_state_dict.items()
+                       if k is not "enc_p.emb.weight"}
 
+  state_dict.update(pretrained_dict)
   if hasattr(model, 'module'):
-    model.module.load_state_dict(new_state_dict)
+    model.module.load_state_dict(state_dict)
   else:
-    model.load_state_dict(new_state_dict)
+    model.load_state_dict(state_dict)
   logger.info("Loaded checkpoint '{}' (iteration {})" .format(
     checkpoint_path, iteration))
   return model, optimizer, learning_rate, iteration
@@ -288,3 +282,6 @@ class HParams():
 
   def __repr__(self):
     return self.__dict__.__repr__()
+
+if __name__ == "__main__":
+  load_warmstart_checkpoint('./models/',)
