@@ -19,3 +19,8 @@ models/
 inference_cpu_test.ipynb
 
 out.wav
+
+pythonm
+
+gcc/**/*
+

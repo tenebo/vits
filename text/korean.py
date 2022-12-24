@@ -20,7 +20,7 @@ def tokenize(text, norm=True):
     """
     if norm:
         text = normalize(text)
-    text = g2p(text)
+    # text = g2p(text)
     tokens = list(hangul_to_jamo(text))
 
     return "".join(tokens)
@@ -101,7 +101,9 @@ def normalize(text):
     text = re.sub('[ㄱ-ㅎ]+',normalize_jamo,text)
     text = normalize_quote(text)
     text = normalize_number(text)
-    text = normalize_nonchar(text)    
+    text = normalize_nonchar(text)  
+
+    text = g2p(text) 
     # text = spacer.space([text])[0]
 
     return text

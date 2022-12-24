@@ -58,6 +58,14 @@ def collapse_whitespace(text):
 def convert_to_ascii(text):
   return unidecode(text)
 
+def convert_to_comma(text):
+  text = text.replace('.',',')
+  text = text.replace(':',',')
+  text = text.replace(';',',')
+  text = text.replace('(',',')
+  text = text.replace(')',',')
+  return text
+
 
 def basic_cleaners(text):
   '''Basic pipeline that lowercases and collapses whitespace without transliteration.'''
@@ -76,4 +84,9 @@ def transliteration_cleaners(text):
 
 def korean_cleaners(text):
   text = korean_tokenize(text)
+  return text
+
+def simple_korean_cleaners(text):
+  text = korean_tokenize(text)
+  text = convert_to_comma(text)
   return text

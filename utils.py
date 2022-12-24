@@ -20,7 +20,7 @@ def load_checkpoint(checkpoint_path, model, optimizer=None):
   checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
   iteration = checkpoint_dict['iteration']
   learning_rate = checkpoint_dict['learning_rate']
-  if optimizer is not None:
+  if optimizer != None:
     optimizer.load_state_dict(checkpoint_dict['optimizer'])
   saved_state_dict = checkpoint_dict['model']
   if hasattr(model, 'module'):
@@ -47,7 +47,7 @@ def load_warmstart_checkpoint(checkpoint_path, model, optimizer=None):
   checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
   iteration = 1
   learning_rate = checkpoint_dict['learning_rate']
-  if optimizer is not None:
+  if optimizer != None:
     optimizer.load_state_dict(checkpoint_dict['optimizer'])
   saved_state_dict = checkpoint_dict['model']
   if hasattr(model, 'module'):
@@ -55,7 +55,7 @@ def load_warmstart_checkpoint(checkpoint_path, model, optimizer=None):
   else:
     state_dict = model.state_dict()
   pretrained_dict = {k: v for k, v in saved_state_dict.items()
-                       if k is not "enc_p.emb.weight"}
+                       if k != "enc_p.emb.weight"}
 
   state_dict.update(pretrained_dict)
   if hasattr(model, 'module'):
@@ -141,7 +141,7 @@ def plot_alignment_to_numpy(alignment, info=None):
                   interpolation='none')
   fig.colorbar(im, ax=ax)
   xlabel = 'Decoder timestep'
-  if info is not None:
+  if info != None:
       xlabel += '\n\n' + info
   plt.xlabel(xlabel)
   plt.ylabel('Encoder timestep')
@@ -167,7 +167,7 @@ def load_filepaths_and_text(filename, split="|"):
 
 def get_hparams(init=True):
   parser = argparse.ArgumentParser()
-  parser.add_argument('-c', '--config', type=str, default="./configs/base.json",
+  parser.add_argument('-c', '--config', type=str, default="./configs/ljs_base.json",
                       help='JSON file for configuration')
   parser.add_argument('-m', '--model', type=str, required=True,
                       help='Model path')
@@ -282,6 +282,3 @@ class HParams():
 
   def __repr__(self):
     return self.__dict__.__repr__()
-
-if __name__ == "__main__":
-  load_warmstart_checkpoint('./models/',)
